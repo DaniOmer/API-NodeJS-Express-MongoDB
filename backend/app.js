@@ -3,6 +3,9 @@ const express = require('express')
 
 const app = express()
 
+// image
+const path = require('path')
+
 // Import de la dépendance qui permet de capter les corps de requête
 const bodyParser = require('body-parser')
 
@@ -11,6 +14,7 @@ const mongoose = require('mongoose')
 
 // Import des routes
 const userRoutes = require('./routes/user')
+const saucesRoutes = require('./routes/sauces')
 
 
 // Connexion à la base de données via Mongoose
@@ -33,8 +37,10 @@ app.use((req, res, next) => {
 
 // Middlewares
 app.use(bodyParser.json()) // Capter les corps de requêtes en JSON
+app.use('/images', express.static(path.join(__dirname, 'images'))) // Gestionnaire de routage
 
 // Routes complètes
 app.use('/api/auth', userRoutes)
+app.use('/api/sauces', saucesRoutes)
 
 module.exports = app

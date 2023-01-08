@@ -10,12 +10,13 @@ const MINE_TYPES = {
 
 // Objet de configuration de Multer
 const storage = multer.diskStorage({
+    // indique la destination des fichiers
     destination : (req, file, callback) => {
         callback(null, 'images')
     },
     filename : (req, file, callback) => {
-        const name = file.originalname.split(' ').join(_)
-        const extension = MINE_TYPES[file.mimetype]
+        const name = file.originalname.split(' ').join('_') // pour remplacer les espaces par _
+        const extension = MINE_TYPES[file.mimetype]       // POur changer les extensions
         callback(null, name + Date.now() + '.' + extension)
     }
 })
