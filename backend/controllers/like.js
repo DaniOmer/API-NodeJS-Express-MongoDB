@@ -1,6 +1,7 @@
 const Sauce = require('../models/sauces') // sauceSchema
 
 // un user peut like, dislike, ou annuler
+
 exports.likeStatus = (req, res) => {
 	const like = req.body.like
 	const userId = req.body.userId

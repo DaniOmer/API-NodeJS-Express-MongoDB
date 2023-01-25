@@ -8,7 +8,11 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
 
-// Parcours d'incription d'un utilisateur
+/**
+ * Permet de créer et enregistrer un utilisateur 
+ * @param {*} req contient la frequête de l'utilisateur
+ * @param {*} res contient la réponse à envoyé
+ */
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then((hash) => {
@@ -40,7 +44,7 @@ exports.login = (req, res, next) => {
             // COmparer le mot de passe du user trouvé à celui de la requête
             bcrypt.compare(req.body.password, user.password)
                 .then((valid) => {
-                    console.log(valid)
+                    
                     if(!valid){
                         return res.status(401).json({ message : 'Paire login/mot de passe incorrecte'})
                     }
@@ -50,7 +54,7 @@ exports.login = (req, res, next) => {
                         // jsonwebtoken encode un nouveau token
                         token : jwt.sign(
                             { userId : user._id },
-                            'TERCES_NEKOT_MODNAR',
+                            process.env.TOKEN_CRYPT,
                             { expiresIn : '24h' }
                         )
                     })
